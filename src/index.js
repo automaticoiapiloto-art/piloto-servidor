@@ -14,6 +14,21 @@ import cors from 'cors';
 import { rotaLicenca } from './licenca.js';
 import { rotaEspelho } from './espelho.js';
 import { rotaAdmin } from './admin.js';
+import { ler, gravar } from './storage.js';
+import { gerarPar } from './crypto.js';
+
+// bootstrap: se ainda nao ha par Ed25519 no disco, gera na primeira subida.
+// Isso simplifica primeiro deploy — nao precisa rodar script manualmente.
+(async () => {
+  const par = await ler('chaves', null);
+  if (!par || !par.privPem) {
+    const novo = gerarPar();
+    await gravar('chaves', novo);
+    console.log('== Par Ed25519 gerado automaticamente ==');
+    console.log('   Chave publica (cole em piloto/src/license.js):');
+    console.log('   ' + novo.pubRawB64);
+  }
+})();
 
 const cfg = {
   port: Number(process.env.PORT || 8443),
@@ -33,6 +48,13 @@ app.use(cors(corsOpts));
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/health', (_req, res) => res.json({ ok: true, uptime: process.uptime() }));
+
+// endpoint publico pra ler a chave PUBLICA (nao expoe a privada)
+app.get('/api/publickey', async (_req, res) => {
+  const par = await ler('chaves', null);
+  if (!par || !par.pubRawB64) return res.status(503).json({ erro: 'servidor ainda sem par de chaves' });
+  res.json({ pubRawB64: par.pubRawB64 });
+});
 app.use('/api', rotaLicenca(cfg));
 app.use('/espelho', rotaEspelho());
 app.use('/admin', rotaAdmin(cfg));
