@@ -1,34 +1,33 @@
 # Config declarativa do Render (blueprint).
 # Uso: no Render, "New" -> "Blueprint" -> aponta pro repo (ou pasta) do servidor.
-# Ele lê este arquivo e cria os recursos automaticamente.
+# Ele le este arquivo e cria os recursos automaticamente.
 services:
   - type: web
     name: piloto-servidor
     runtime: node
-    plan: starter                    # $7/mes — nao dorme
-    region: oregon                   # troca pra sao ou virginia se preferir
+    plan: starter
     buildCommand: npm ci
     startCommand: node src/index.js
     healthCheckPath: /health
     autoDeploy: true
     disk:
       name: piloto-dados
-      mountPath: /app/data           # tudo dentro de data/ persiste entre deploys
-      sizeGB: 1                      # $1/mes
+      mountPath: /app/data
+      sizeGB: 1
     envVars:
       - key: NODE_ENV
-        value: production
+        value: "production"
       - key: PORT
-        value: 8443
+        value: "8443"
       - key: CORS_ORIGINS
         value: "https://pilotoautomaticoia.com.br,https://www.pilotoautomaticoia.com.br,chrome-extension://*"
       - key: TRIAL_DIAS
-        value: 30
+        value: "30"
       - key: TOKEN_DIAS
-        value: 10
+        value: "10"
       - key: TOKEN_RENOVA_SEG
-        value: 259200
+        value: "259200"
       - key: FP_POR_LIC
-        value: 3
+        value: "3"
       - key: ADMIN_TOKEN
-        generateValue: true          # o Render gera um valor aleatorio seguro
+        generateValue: true
