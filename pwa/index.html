@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0f1115">
+  <title>Piloto — Espelho</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root {
+      --bg: #0f1115; --bg2: #171a21; --bg3: #1f2330;
+      --tx: #e6e8ee; --tx2: #a3a9b8;
+      --azul: #4c8bff; --verde: #35c775; --amarelo: #f2b636; --vermelho: #e05252;
+      --borda: #262b3a;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: var(--bg2); border-bottom: 1px solid var(--borda);
+    }
+    .marca { display: flex; align-items: center; gap: 10px; }
+    .logo-img {
+      width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+      box-shadow: 0 0 10px rgba(76, 139, 255, 0.5);
+    }
+    header h1 { font-size: 16px; margin: 0; }
+    .status { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--tx2); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tx2); }
+    .dot.ok { background: var(--verde); box-shadow: 0 0 6px var(--verde); }
+    .dot.erro { background: var(--vermelho); }
+    main { padding: 16px; max-width: 480px; margin: 0 auto; }
+    .crono {
+      background: linear-gradient(135deg, var(--azul), #7a5cff);
+      color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 16px;
+    }
+    .crono-l { font-size: 12px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
+    .crono-n { font-size: 42px; font-weight: 800; letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .card { background: var(--bg2); border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+    .card .l { font-size: 11px; color: var(--tx2); text-transform: uppercase; letter-spacing: 0.5px; }
+    .card .v { font-size: 22px; font-weight: 700; margin-top: 4px; }
+    .card.wide { grid-column: 1 / -1; }
+    .feed { background: var(--bg2); border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+    .feed h3 { font-size: 12px; color: var(--tx2); text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 10px; }
+    .feed ul { list-style: none; margin: 0; padding: 0; max-height: 240px; overflow-y: auto; }
+    .feed li { padding: 8px 0; border-bottom: 1px solid var(--borda); font-size: 14px; }
+    .feed li:last-child { border: none; }
+    .feed .ts { color: var(--tx2); font-size: 11px; margin-right: 8px; }
+    .setup {
+      display: flex; flex-direction: column; gap: 10px; padding: 20px;
+      background: var(--bg2); border: 1px solid var(--borda); border-radius: 12px; margin-top: 40px;
+    }
+    .setup input {
+      width: 100%; padding: 12px; font-size: 16px; background: var(--bg3); color: var(--tx);
+      border: 1px solid var(--borda); border-radius: 8px;
+    }
+    .setup button {
+      padding: 14px; background: var(--azul); color: white; border: none; border-radius: 8px;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+    }
+    .acao {
+      width: 100%; padding: 16px; margin-top: 12px;
+      background: var(--vermelho); color: white; border: none; border-radius: 10px;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+    }
+    .acao.secundaria { background: var(--bg3); color: var(--tx); }
+    small.hint { display: block; color: var(--tx2); font-size: 12px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="marca">
+      <img src="logo.png" alt="Piloto Automatico IA" class="logo-img">
+      <h1>Piloto Automático</h1>
+    </div>
+    <div class="status"><span class="dot" id="dot"></span><span id="status-lbl">conectando...</span></div>
+  </header>
+
+  <main>
+    <div id="setup-view" class="setup" hidden>
+      <img src="logo.png" alt="Piloto Automatico IA" style="width:120px;height:120px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;box-shadow:0 0 20px rgba(76,139,255,0.5);">
+      <h2 style="text-align:center;margin:0 0 4px">Piloto Automático IA</h2>
+      <p style="text-align:center;color:var(--tx2);margin:0 0 12px;font-size:13px">Sua live no automático</p>
+      <h2>Parear com o painel</h2>
+      <p>Cole aqui o código de pareamento que aparece na aba <strong>Espelho</strong> do painel do Chrome.</p>
+      <input type="text" id="pin-inp" placeholder="Código">
+      <button id="btn-parear">Parear</button>
+      <small class="hint">O código fica salvo neste celular. Pra trocar, apague os dados do app.</small>
+    </div>
+
+    <div id="live-view" hidden>
+      <div class="crono">
+        <div class="crono-l">Tempo de live</div>
+        <div class="crono-n" id="crono">--:--:--</div>
+      </div>
+      <div class="grid">
+        <div class="card"><div class="l">Assistindo</div><div class="v" id="v-view">-</div></div>
+        <div class="card"><div class="l">Vendas</div><div class="v" id="v-vendas">-</div></div>
+        <div class="card wide"><div class="l">GMV</div><div class="v" id="v-gmv">R$ -</div></div>
+      </div>
+      <div class="feed">
+        <h3>Últimas vendas</h3>
+        <ul id="feed-ul"></ul>
+      </div>
+      <button class="acao secundaria" id="btn-falso">Foi falso alarme</button>
+      <button class="acao" id="btn-encerrar">Encerrar live agora</button>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+      const KEY = 'piloto_espelho_pin';
+      const KEY_URL = 'piloto_espelho_url';
+      const URL_DEFAULT = 'https://pilotoautomaticoia.com.br/espelho';
+
+      const $ = (id) => document.getElementById(id);
+      let pin = localStorage.getItem(KEY) || '';
+      let baseUrl = localStorage.getItem(KEY_URL) || URL_DEFAULT;
+      let comandoPendente = null;
+      let ultimoTs = 0;
+
+      function mostrarSetup() {
+        $('setup-view').hidden = false;
+        $('live-view').hidden = true;
+      }
+      function mostrarLive() {
+        $('setup-view').hidden = true;
+        $('live-view').hidden = false;
+      }
+
+      $('btn-parear').addEventListener('click', () => {
+        const v = $('pin-inp').value.trim();
+        if (!v) return;
+        pin = v;
+        localStorage.setItem(KEY, pin);
+        mostrarLive();
+        tick();
+      });
+
+      $('btn-encerrar').addEventListener('click', () => {
+        if (!confirm('Encerrar a live agora?')) return;
+        comandoPendente = 'encerrar';
+      });
+      $('btn-falso').addEventListener('click', () => { comandoPendente = 'falso_alarme'; });
+
+      function fmt(ms) {
+        if (!ms || ms < 0) return '--:--:--';
+        const s = Math.floor(ms / 1000);
+        const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
+        return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
+      }
+      function real(v) { if (v == null) return 'R$ -'; return 'R$ ' + Number(v).toFixed(2).replace('.', ','); }
+
+      async function tick() {
+        if (!pin) { mostrarSetup(); return; }
+        const url = baseUrl.replace(/\/$/, '') + '/' + encodeURIComponent(pin);
+        const body = { app: true, hora: Date.now() };
+        if (comandoPendente) { body.acao = comandoPendente; comandoPendente = null; }
+        try {
+          const r = await fetch(url, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body),
+          });
+          if (!r.ok) throw new Error('http ' + r.status);
+          const j = await r.json();
+          ultimoTs = Date.now();
+          $('dot').className = 'dot ok';
+          $('status-lbl').textContent = 'ao vivo';
+          const dur = j.startTs ? (Date.now() - j.startTs) : 0;
+          $('crono').textContent = fmt(dur);
+          $('v-view').textContent = j.assistiramTotal != null ? j.assistiramTotal : '-';
+          $('v-vendas').textContent = j.salesCount != null ? j.salesCount : '-';
+          $('v-gmv').textContent = real(j.gmvOficial || j.salesTotal);
+          const feed = j.salesFeed || [];
+          const ul = $('feed-ul'); ul.innerHTML = '';
+          for (const s of feed.slice(0, 20)) {
+            const li = document.createElement('li');
+            const hh = new Date(s.ts).toLocaleTimeString().slice(0, 5);
+            li.innerHTML = `<span class="ts">${hh}</span> ${s.nome || '(sem nome)'} — ${s.valor ? real(s.valor) : ''}`;
+            ul.appendChild(li);
+          }
+        } catch (e) {
+          if (Date.now() - ultimoTs > 15000) {
+            $('dot').className = 'dot erro';
+            $('status-lbl').textContent = 'sem conexão';
+          }
+        }
+      }
+
+      if (pin) { mostrarLive(); tick(); } else { mostrarSetup(); }
+      setInterval(tick, 3000);
+    })();
+  </script>
+</body>
+</html>

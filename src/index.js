@@ -11,11 +11,15 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { rotaLicenca } from './licenca.js';
 import { rotaEspelho } from './espelho.js';
 import { rotaAdmin } from './admin.js';
 import { ler, gravar } from './storage.js';
 import { gerarPar } from './crypto.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // bootstrap: se ainda nao ha par Ed25519 no disco, gera na primeira subida.
 // Isso simplifica primeiro deploy — nao precisa rodar script manualmente.
@@ -48,6 +52,9 @@ app.use(cors(corsOpts));
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/health', (_req, res) => res.json({ ok: true, uptime: process.uptime() }));
+
+// serve o PWA do espelho (celular) como arquivos estaticos em /pwa
+app.use('/pwa', express.static(path.resolve(__dirname, '..', 'pwa')));
 
 // endpoint publico pra ler a chave PUBLICA (nao expoe a privada)
 app.get('/api/publickey', async (_req, res) => {
