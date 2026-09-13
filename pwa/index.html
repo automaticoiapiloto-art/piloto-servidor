@@ -113,7 +113,9 @@
       'use strict';
       const KEY = 'piloto_espelho_pin';
       const KEY_URL = 'piloto_espelho_url';
-      const URL_DEFAULT = 'https://pilotoautomaticoia.com.br/espelho';
+      // usa o proprio host onde o PWA esta hospedado — funciona em localhost,
+      // Render ou dominio proprio sem precisar hardcode.
+      const URL_DEFAULT = location.origin + '/espelho';
 
       const $ = (id) => document.getElementById(id);
       let pin = localStorage.getItem(KEY) || '';
