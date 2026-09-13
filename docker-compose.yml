@@ -1,0 +1,43 @@
+# Docker Compose para producao com HTTPS automatico via Caddy.
+#
+# Passos:
+#   1. Copie .env.example para .env e ajuste (defina ADMIN_TOKEN!)
+#   2. Aponte seu dominio (ex: api.pilotoautomaticoia.com.br) pro IP do servidor
+#   3. Ajuste o email no Caddyfile
+#   4. `docker compose up -d`
+#
+# Caddy pega certificado Let's Encrypt sozinho na primeira subida e renova.
+# Dados de licenca ficam em ./data (bind mount fora do container).
+services:
+  piloto-api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    expose:
+      - "8443"
+    networks:
+      - piloto
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - piloto-api
+    networks:
+      - piloto
+
+networks:
+  piloto:
+
+volumes:
+  caddy_data:
+  caddy_config:

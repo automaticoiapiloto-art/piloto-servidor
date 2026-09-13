@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Piloto Automatico IA — Admin</title>
+  <style>
+    :root {
+      --bg: #0f1115; --bg2: #171a21; --bg3: #1f2330;
+      --tx: #e6e8ee; --tx2: #a3a9b8;
+      --azul: #4c8bff; --verde: #35c775; --vermelho: #e05252; --amarelo: #f2b636;
+      --borda: #262b3a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; background: var(--bg); color: var(--tx); font-family: system-ui, sans-serif; font-size: 14px; }
+    header {
+      padding: 16px 24px; background: var(--bg2); border-bottom: 1px solid var(--borda);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    header h1 { margin: 0; font-size: 18px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .card { background: var(--bg2); border: 1px solid var(--borda); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .login { max-width: 400px; margin: 100px auto; }
+    input, select, button {
+      padding: 10px 12px; border-radius: 6px; border: 1px solid var(--borda);
+      background: var(--bg3); color: var(--tx); font-size: 14px; font-family: inherit;
+    }
+    input[type="text"], input[type="password"], input[type="number"], select { width: 100%; margin-bottom: 10px; }
+    button { cursor: pointer; }
+    button.primaria { background: var(--azul); border-color: var(--azul); color: white; }
+    button.danger { color: var(--vermelho); border-color: var(--vermelho); background: transparent; }
+    button.success { color: var(--verde); border-color: var(--verde); background: transparent; }
+    button:hover { filter: brightness(1.1); }
+    label { display: block; font-size: 12px; color: var(--tx2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--borda); }
+    th { font-size: 11px; color: var(--tx2); text-transform: uppercase; letter-spacing: 0.3px; }
+    tr:hover { background: var(--bg3); }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;
+    }
+    .badge.ok { background: rgba(53,199,117,0.15); color: var(--verde); }
+    .badge.off { background: rgba(224,82,82,0.15); color: var(--vermelho); }
+    .badge.plano { background: rgba(76,139,255,0.15); color: var(--azul); }
+    .acoes { display: flex; gap: 4px; }
+    .acoes button { padding: 4px 8px; font-size: 11px; }
+    .form-linha { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; padding: 12px 20px; background: var(--bg3);
+      border: 1px solid var(--borda); border-radius: 6px; color: var(--tx);
+      transform: translateY(200%); transition: transform 0.3s;
+    }
+    .toast.on { transform: translateY(0); }
+    .toast.ok { border-color: var(--verde); }
+    .toast.erro { border-color: var(--vermelho); }
+    code { font-family: 'Courier New', monospace; background: var(--bg3); padding: 2px 5px; border-radius: 3px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="login-view" class="login card">
+    <h2 style="margin-top:0">Piloto Automatico IA — Admin</h2>
+    <label>Token administrativo</label>
+    <input type="password" id="token" placeholder="ADMIN_TOKEN do .env">
+    <button class="primaria" id="btn-login" style="width:100%">Entrar</button>
+  </div>
+
+  <div id="app-view" hidden>
+    <header>
+      <h1>Piloto Automatico IA — Admin</h1>
+      <div>
+        <span id="lbl-total"></span>
+        <button id="btn-sair">Sair</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="card">
+        <h3 style="margin-top:0">Emitir nova licença</h3>
+        <div class="form-linha">
+          <div>
+            <label>Cliente</label>
+            <input type="text" id="e-cliente" placeholder="Nome ou email">
+          </div>
+          <div>
+            <label>Plano</label>
+            <select id="e-plano">
+              <option value="basico">Básico</option>
+              <option value="pro">Pro</option>
+              <option value="premium">Premium</option>
+              <option value="dev">Dev</option>
+            </select>
+          </div>
+          <div>
+            <label>Dias de validade (0 = vitalício)</label>
+            <input type="number" id="e-dias" value="365" min="0">
+          </div>
+          <div>
+            <label>Chave (deixe vazio = auto)</label>
+            <input type="text" id="e-chave" placeholder="opcional">
+          </div>
+          <div>
+            <button class="primaria" id="btn-emitir">Emitir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Licenças</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Chave</th>
+              <th>Cliente</th>
+              <th>Plano</th>
+              <th>Status</th>
+              <th>Válido até</th>
+              <th>Máquinas</th>
+              <th>Última ativação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const KEY = 'piloto_admin_token';
+    let token = sessionStorage.getItem(KEY) || '';
+
+    const $ = (id) => document.getElementById(id);
+    function toast(msg, tipo) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.className = 'toast on ' + (tipo || '');
+      setTimeout(() => t.classList.remove('on'), 3000);
+    }
+
+    async function api(path, body) {
+      const opt = { headers: { 'x-admin-token': token, 'content-type': 'application/json' } };
+      if (body) { opt.method = 'POST'; opt.body = JSON.stringify(body); }
+      const r = await fetch('/admin/api' + path, opt);
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.erro || ('http ' + r.status));
+      return j;
+    }
+
+    function mostrarApp() {
+      $('login-view').hidden = true;
+      $('app-view').hidden = false;
+      carregar();
+    }
+
+    async function carregar() {
+      try {
+        const j = await api('/licencas');
+        $('lbl-total').textContent = j.total + ' licenças';
+        const tb = $('tbody'); tb.innerHTML = '';
+        for (const l of j.licencas) {
+          const tr = document.createElement('tr');
+          const va = l.validoAte ? new Date(l.validoAte * 1000).toLocaleDateString('pt-BR') : 'vitalício';
+          const ua = l.ultimaAtivacao ? new Date(l.ultimaAtivacao * 1000).toLocaleString('pt-BR') : '-';
+          tr.innerHTML = `
+            <td><code>${l.chave}</code></td>
+            <td>${escaparHtml(l.cliente || '-')}</td>
+            <td><span class="badge plano">${l.plano}</span></td>
+            <td><span class="badge ${l.ativa ? 'ok' : 'off'}">${l.ativa ? 'ativa' : 'inativa'}</span></td>
+            <td>${va}</td>
+            <td>${l.maquinas}/3</td>
+            <td>${ua}</td>
+            <td class="acoes">
+              ${l.ativa
+                ? `<button class="danger" data-a="desativar" data-k="${l.chave}">Desativar</button>`
+                : `<button class="success" data-a="reativar" data-k="${l.chave}">Reativar</button>`}
+              <button data-a="reset-fp" data-k="${l.chave}">Reset máquinas</button>
+              <button data-a="estender" data-k="${l.chave}">+30 dias</button>
+            </td>`;
+          tb.appendChild(tr);
+        }
+        for (const b of tb.querySelectorAll('button[data-a]')) {
+          b.addEventListener('click', () => acao(b.dataset.a, b.dataset.k));
+        }
+      } catch (e) {
+        toast('Erro: ' + e.message, 'erro');
+        sair();
+      }
+    }
+
+    async function acao(nome, chave) {
+      const conf = {
+        desativar: 'Desativar a licença ' + chave + '?',
+        reativar: 'Reativar ' + chave + '?',
+        'reset-fp': 'Apagar as máquinas registradas em ' + chave + '?',
+        estender: 'Adicionar 30 dias à validade?',
+      };
+      if (!confirm(conf[nome])) return;
+      const body = { chave };
+      if (nome === 'estender') body.dias = 30;
+      try {
+        await api('/' + nome, body);
+        toast('OK', 'ok');
+        carregar();
+      } catch (e) { toast('Erro: ' + e.message, 'erro'); }
+    }
+
+    $('btn-emitir').addEventListener('click', async () => {
+      const body = {
+        cliente: $('e-cliente').value.trim(),
+        plano: $('e-plano').value,
+        dias: Number($('e-dias').value),
+        chave: $('e-chave').value.trim() || undefined,
+      };
+      try {
+        const j = await api('/emitir', body);
+        toast('Chave emitida: ' + j.chave, 'ok');
+        $('e-cliente').value = ''; $('e-chave').value = '';
+        carregar();
+      } catch (e) { toast('Erro: ' + e.message, 'erro'); }
+    });
+
+    $('btn-login').addEventListener('click', async () => {
+      const v = $('token').value.trim();
+      if (!v) return;
+      token = v;
+      try {
+        await api('/licencas'); // valida
+        sessionStorage.setItem(KEY, token);
+        mostrarApp();
+      } catch (e) { toast('Token inválido', 'erro'); }
+    });
+    $('token').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('btn-login').click(); });
+
+    function sair() {
+      token = ''; sessionStorage.removeItem(KEY);
+      $('login-view').hidden = false; $('app-view').hidden = true;
+    }
+    $('btn-sair').addEventListener('click', sair);
+
+    function escaparHtml(s) {
+      return String(s || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    }
+
+    if (token) mostrarApp();
+  </script>
+</body>
+</html>

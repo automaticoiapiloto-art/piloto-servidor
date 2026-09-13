@@ -1,0 +1,38 @@
+# Substitua api.pilotoautomaticoia.com.br pelo seu dominio.
+# Caddy pega certificado Let's Encrypt automaticamente na primeira subida.
+api.pilotoautomaticoia.com.br {
+    # email pra Let's Encrypt renovar certificado — troque
+    tls seu-email@dominio.com.br
+
+    # CORS: permita apenas dominios que voce controla + a extensao publicada
+    # (troque o id da extensao quando publicar na Chrome Web Store)
+    @cors_preflight {
+        method OPTIONS
+    }
+    handle @cors_preflight {
+        header Access-Control-Allow-Origin "{http.request.header.Origin}"
+        header Access-Control-Allow-Methods "GET, POST, OPTIONS"
+        header Access-Control-Allow-Headers "content-type, x-admin-token"
+        header Access-Control-Max-Age "3600"
+        respond 204
+    }
+    header Access-Control-Allow-Origin "{http.request.header.Origin}"
+
+    # log rotacionado
+    log {
+        output file /var/log/access.log {
+            roll_size 10mb
+            roll_keep 5
+        }
+    }
+
+    # gzip + brotli
+    encode gzip
+
+    reverse_proxy piloto-api:8443 {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}
