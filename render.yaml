@@ -31,3 +31,5 @@ services:
         value: "3"
       - key: ADMIN_TOKEN
         generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false

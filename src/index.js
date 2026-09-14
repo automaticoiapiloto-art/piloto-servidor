@@ -16,6 +16,7 @@ import { fileURLToPath } from 'node:url';
 import { rotaLicenca } from './licenca.js';
 import { rotaEspelho } from './espelho.js';
 import { rotaAdmin } from './admin.js';
+import { rotaIA } from './ia.js';
 import { ler, gravar } from './storage.js';
 import { gerarPar } from './crypto.js';
 
@@ -63,6 +64,7 @@ app.get('/api/publickey', async (_req, res) => {
   res.json({ pubRawB64: par.pubRawB64 });
 });
 app.use('/api', rotaLicenca(cfg));
+app.use('/api/ia', rotaIA(cfg));
 app.use('/espelho', rotaEspelho());
 app.use('/admin', rotaAdmin(cfg));
 
