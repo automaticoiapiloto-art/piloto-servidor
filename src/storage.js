@@ -9,7 +9,13 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.resolve(__dirname, '..', 'data');
+
+// Permite override do path via env — util pra Render onde o disk pode nao
+// bater com o path relativo do build. Se DATA_DIR estiver setado, usa ele.
+// Senao, path relativo tradicional (bom pra local + Docker).
+const DATA_DIR = process.env.DATA_DIR || path.resolve(__dirname, '..', 'data');
+
+console.log('[storage] DATA_DIR =', DATA_DIR);
 
 let filaEscrita = Promise.resolve();
 
