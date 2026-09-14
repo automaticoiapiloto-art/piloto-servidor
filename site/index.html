@@ -75,8 +75,8 @@ body {
   max-width: 1280px; margin: 0 auto;
   padding: 0 32px;
 }
-.section { padding: 100px 0; position: relative; }
-.section-narrow { padding: 80px 0; }
+.section { padding: 80px 0; position: relative; }
+.section-narrow { padding: 60px 0; }
 
 /* ================= BADGES / COMUNS ================= */
 .badge-live {
@@ -125,20 +125,20 @@ body {
 
 /* ================= HERO ================= */
 .hero {
-  padding: 60px 0 120px;
+  padding: 32px 0 60px;
   position: relative;
 }
 .hero-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
+  gap: 48px; align-items: center;
 }
-.hero-esq .badge-live { margin-bottom: 32px; }
+.hero-esq .badge-live { margin-bottom: 24px; }
 .hero-h {
-  font-size: clamp(40px, 5.5vw, 68px);
+  font-size: clamp(34px, 4.2vw, 56px);
   font-weight: 900;
   line-height: 1.02;
-  letter-spacing: -2px;
-  margin-bottom: 24px;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
 }
 .hero-h .l1 { display: block; color: var(--tx); }
 .hero-h .l2 {
@@ -148,25 +148,25 @@ body {
   -webkit-text-fill-color: transparent;
 }
 .hero-sub {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--tx-2);
-  max-width: 540px; margin-bottom: 40px;
+  max-width: 540px; margin-bottom: 32px;
   line-height: 1.55;
 }
 .hero-cta-row {
-  display: flex; align-items: center; gap: 24px;
-  margin-bottom: 20px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 20px;
+  margin-bottom: 16px; flex-wrap: wrap;
 }
 .hero-preco {
   display: flex; flex-direction: column;
 }
 .hero-preco .valor {
-  font-size: 32px; font-weight: 900; color: var(--ciano);
+  font-size: 28px; font-weight: 900; color: var(--ciano);
   line-height: 1;
 }
-.hero-preco .label { font-size: 11px; color: var(--tx-3); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+.hero-preco .label { font-size: 10px; color: var(--tx-3); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
 .hero-bullets {
-  font-size: 13px; color: var(--tx-3);
+  font-size: 12px; color: var(--tx-3);
   letter-spacing: 0.3px;
 }
 .hero-bullets span { color: var(--ciano); margin: 0 8px; }
@@ -175,11 +175,11 @@ body {
 .phone-wrap {
   position: relative;
   display: flex; align-items: center; justify-content: center;
-  min-height: 620px;
+  min-height: 540px;
 }
 .phone {
   position: relative;
-  width: 300px; height: 620px;
+  width: 260px; height: 540px;
   background: #0a0a12;
   border-radius: 48px;
   padding: 12px;
@@ -359,12 +359,12 @@ body {
 
 /* ================= BLOCO 2 - PROBLEMA ================= */
 .bloco-problema {
-  padding: 100px 0;
+  padding: 70px 0;
   position: relative;
 }
 .problema-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: center;
+  gap: 60px; align-items: center;
 }
 .imagem-placeholder {
   width: 100%; aspect-ratio: 4/5;
@@ -421,11 +421,11 @@ body {
 
 /* ================= BLOCO 3 - COMO FUNCIONA ================= */
 .bloco-como {
-  padding: 120px 0;
+  padding: 80px 0;
   background: linear-gradient(180deg, transparent, rgba(76, 139, 255, 0.04), transparent);
 }
 .como-header {
-  text-align: center; margin-bottom: 80px;
+  text-align: center; margin-bottom: 60px;
 }
 .como-header h2 {
   font-size: clamp(30px, 4.5vw, 56px);
@@ -514,7 +514,7 @@ body {
 
 /* ================= BLOCO 4 - DESAFIO ================= */
 .bloco-desafio {
-  padding: 140px 0;
+  padding: 90px 0;
   background:
     radial-gradient(ellipse 800px 600px at 50% 50%, rgba(76, 139, 255, 0.15), transparent 60%),
     linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3), transparent);
@@ -541,7 +541,7 @@ body {
   color: var(--tx-3); margin-bottom: 20px; font-weight: 700;
 }
 .meta-numero {
-  font-size: clamp(60px, 10vw, 140px);
+  font-size: clamp(56px, 8vw, 120px);
   font-weight: 900; line-height: 1;
   letter-spacing: -6px;
   background: linear-gradient(135deg, var(--ciano) 0%, var(--azul) 50%, var(--ciano) 100%);
@@ -572,14 +572,14 @@ body {
 }
 
 /* ================= BLOCO 5 - OFERTA ================= */
-.bloco-oferta { padding: 120px 0; }
+.bloco-oferta { padding: 80px 0; }
 .oferta-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: center;
+  gap: 60px; align-items: center;
 }
 .oferta-visual {
   position: relative;
-  min-height: 500px;
+  min-height: 400px;
   display: flex; align-items: center; justify-content: center;
 }
 .notebook {
@@ -692,7 +692,7 @@ body {
 }
 
 /* ================= FAQ ================= */
-.faq { padding: 100px 0; }
+.faq { padding: 70px 0; }
 .faq h2 {
   text-align: center;
   font-size: clamp(28px, 4vw, 44px);
