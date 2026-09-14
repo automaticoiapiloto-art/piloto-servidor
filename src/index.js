@@ -68,6 +68,13 @@ app.use('/api/ia', rotaIA(cfg));
 app.use('/espelho', rotaEspelho());
 app.use('/admin', rotaAdmin(cfg));
 
+// landing page + paginas legais em / (raiz). Extensao .html implicita:
+// /termos serve termos.html automaticamente. DEIXAR POR ULTIMO (fallback).
+app.use('/', express.static(path.resolve(__dirname, '..', 'site'), {
+  extensions: ['html'],
+  index: 'index.html',
+}));
+
 app.use((err, _req, res, _next) => {
   console.error('[erro]', err);
   res.status(500).json({ erro: 'erro interno' });
