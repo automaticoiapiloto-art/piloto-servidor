@@ -97,8 +97,14 @@ ${faq || '(sem faq configurada)'}`;
 
       return res.json({ resposta: texto });
     } catch (e) {
-      console.error('[ia] erro:', e && e.message);
-      return res.status(502).json({ erro: 'IA nao respondeu' });
+      console.error('[ia] erro:', e && (e.status || ''), e && e.message, e && e.error);
+      // devolve detalhe do erro (nao expoe a chave em si)
+      const msg = (e && e.message) || 'erro desconhecido';
+      const status = (e && e.status) || 502;
+      return res.status(status).json({
+        erro: 'IA nao respondeu',
+        detalhe: msg.slice(0, 200),
+      });
     }
   });
 
