@@ -440,17 +440,17 @@ body {
 
 /* ================= BLOCO 3 - COMO FUNCIONA ================= */
 .bloco-como {
-  padding: 80px 0;
+  padding: 50px 0;
   background: linear-gradient(180deg, transparent, rgba(76, 139, 255, 0.04), transparent);
 }
 .como-header {
-  text-align: center; margin-bottom: 60px;
+  text-align: center; margin-bottom: 40px;
 }
 .como-header h2 {
-  font-size: clamp(30px, 4.5vw, 56px);
+  font-size: clamp(24px, 3.2vw, 40px);
   font-weight: 900;
   line-height: 1.05;
-  letter-spacing: -1.5px;
+  letter-spacing: -1px;
   max-width: 900px; margin: 0 auto;
 }
 .como-header h2 .l1 { color: var(--tx); }
@@ -463,13 +463,13 @@ body {
 .como-header h2 .l3 { display: block; color: var(--tx-2); }
 .como-passos {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 32px;
+  gap: 24px;
   position: relative;
 }
 /* linha conectora entre os passos */
 .como-passos::before {
   content: ''; position: absolute;
-  top: 100px; left: 15%; right: 15%; height: 2px;
+  top: 78px; left: 15%; right: 15%; height: 2px;
   background: linear-gradient(90deg, transparent, var(--ciano), var(--azul), var(--ciano), transparent);
   z-index: 0;
   opacity: 0.4;
@@ -479,35 +479,36 @@ body {
   text-align: center;
 }
 .passo-media {
-  width: 200px; height: 200px; margin: 0 auto 32px;
-  border-radius: 32px;
+  width: 160px; height: 160px; margin: 0 auto 20px;
+  border-radius: 28px;
   background: linear-gradient(135deg, var(--bg-3), rgba(20, 40, 70, 0.6));
   border: 1px solid var(--borda-2);
   display: flex; align-items: center; justify-content: center;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 229, 255, 0.15);
-  font-size: 72px;
+  font-size: 56px;
 }
 .passo-media::before {
   content: ''; position: absolute; inset: -2px;
   background: linear-gradient(135deg, var(--ciano), transparent, var(--azul));
-  border-radius: 32px; z-index: -1; opacity: 0.5;
+  border-radius: 28px; z-index: -1; opacity: 0.5;
 }
 .passo-num-visual {
-  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
-  padding: 6px 16px;
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  padding: 4px 12px;
   background: linear-gradient(135deg, var(--azul), var(--ciano));
-  color: white; font-size: 12px; font-weight: 900;
-  letter-spacing: 2px; border-radius: 20px;
+  color: white; font-size: 10px; font-weight: 900;
+  letter-spacing: 1.5px; border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+  white-space: nowrap;
 }
 .passo-titulo {
-  font-size: 24px; font-weight: 800;
-  margin-bottom: 12px; letter-spacing: -0.3px;
+  font-size: 20px; font-weight: 800;
+  margin-bottom: 8px; letter-spacing: -0.3px;
 }
 .passo-desc {
-  color: var(--tx-2); font-size: 15px; line-height: 1.5;
-  max-width: 280px; margin: 0 auto;
+  color: var(--tx-2); font-size: 14px; line-height: 1.4;
+  max-width: 260px; margin: 0 auto;
 }
 /* mockup celular pequeno pro passo 3 */
 .mini-phone {
@@ -570,7 +571,7 @@ body {
 
 /* ================= BLOCO 4 - DESAFIO ================= */
 .bloco-desafio {
-  padding: 90px 0;
+  padding: 50px 0;
   background:
     radial-gradient(ellipse 800px 600px at 50% 50%, rgba(76, 139, 255, 0.15), transparent 60%),
     linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.3), transparent);
@@ -579,33 +580,33 @@ body {
 }
 .desafio-badge {
   display: inline-block;
-  padding: 10px 24px; border-radius: 40px;
+  padding: 6px 18px; border-radius: 40px;
   background: rgba(255, 51, 85, 0.1);
   border: 1px solid rgba(255, 51, 85, 0.4);
-  color: #ff6a82; font-size: 12px; font-weight: 800;
+  color: #ff6a82; font-size: 11px; font-weight: 800;
   letter-spacing: 3px; text-transform: uppercase;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 .desafio-h {
-  font-size: clamp(32px, 5vw, 60px);
+  font-size: clamp(24px, 3.5vw, 42px);
   font-weight: 900; line-height: 1.05;
-  letter-spacing: -1.5px;
-  max-width: 900px; margin: 0 auto 60px;
+  letter-spacing: -1px;
+  max-width: 900px; margin: 0 auto 32px;
 }
 .meta-valor {
-  font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--tx-3); margin-bottom: 20px; font-weight: 700;
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--tx-3); margin-bottom: 8px; font-weight: 700;
 }
 .meta-numero {
-  font-size: clamp(56px, 8vw, 120px);
+  font-size: clamp(48px, 7vw, 88px);
   font-weight: 900; line-height: 1;
-  letter-spacing: -6px;
+  letter-spacing: -4px;
   background: linear-gradient(135deg, var(--ciano) 0%, var(--azul) 50%, var(--ciano) 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shine 5s linear infinite;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   filter: drop-shadow(0 0 40px rgba(0, 229, 255, 0.4));
 }
 @keyframes shine {
@@ -613,9 +614,9 @@ body {
   50% { background-position: 100% 50%; }
 }
 .meta-linhas {
-  display: flex; justify-content: center; gap: 32px;
-  color: var(--tx-2); font-size: 15px; font-weight: 500;
-  margin: 40px 0 60px;
+  display: flex; justify-content: center; gap: 20px;
+  color: var(--tx-2); font-size: 13px; font-weight: 500;
+  margin: 24px 0 28px;
   flex-wrap: wrap;
 }
 .meta-linhas span { display: flex; align-items: center; gap: 8px; }
@@ -623,8 +624,8 @@ body {
   content: '●'; color: var(--ciano); font-size: 8px;
 }
 .desafio-fine {
-  max-width: 700px; margin: 32px auto 0;
-  color: var(--tx-3); font-size: 12px; line-height: 1.5;
+  max-width: 700px; margin: 20px auto 0;
+  color: var(--tx-3); font-size: 11px; line-height: 1.5;
 }
 
 /* ================= BLOCO 5 - OFERTA ================= */
