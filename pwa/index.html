@@ -104,6 +104,12 @@
         <h3>Últimas vendas</h3>
         <ul id="feed-ul"></ul>
       </div>
+      <div style="background:var(--bg2);border:1px solid var(--borda);border-radius:10px;padding:14px;margin-top:12px">
+        <h3 style="margin:0 0 10px;font-size:13px;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px">Enviar mensagem no chat</h3>
+        <textarea id="chat-txt" placeholder="Escreva a mensagem..." style="width:100%;padding:12px;font-size:15px;background:var(--bg3);color:var(--tx);border:1px solid var(--borda);border-radius:8px;resize:vertical;min-height:70px;font-family:inherit"></textarea>
+        <button class="acao" id="btn-enviar-chat" style="background:var(--verde);margin-top:8px">Enviar no chat da live</button>
+        <div id="chat-status" style="color:var(--tx2);font-size:12px;margin-top:8px;text-align:center"></div>
+      </div>
       <button class="acao secundaria" id="btn-falso">Foi falso alarme</button>
       <button class="acao" id="btn-encerrar">Encerrar live agora</button>
     </div>
@@ -147,6 +153,27 @@
         comandoPendente = 'encerrar';
       });
       $('btn-falso').addEventListener('click', () => { comandoPendente = 'falso_alarme'; });
+
+      $('btn-enviar-chat').addEventListener('click', async () => {
+        const txt = $('chat-txt').value.trim();
+        const st = $('chat-status');
+        if (!txt) { st.textContent = 'Escreva algo primeiro.'; return; }
+        st.textContent = 'Enviando...';
+        try {
+          const url = baseUrl.replace(/\/$/, '') + '/' + encodeURIComponent(pin);
+          const r = await fetch(url, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ app: true, chat: txt }),
+          });
+          if (!r.ok) throw new Error('http ' + r.status);
+          st.textContent = 'Enviado — vai aparecer no chat da live em segundos.';
+          $('chat-txt').value = '';
+          setTimeout(() => { st.textContent = ''; }, 3000);
+        } catch (e) {
+          st.textContent = 'Falha: ' + (e.message || e);
+        }
+      });
 
       function fmt(ms) {
         if (!ms || ms < 0) return '--:--:--';

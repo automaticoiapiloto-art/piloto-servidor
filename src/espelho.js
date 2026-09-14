@@ -41,6 +41,11 @@ export function rotaEspelho() {
         fila.push({ acao: String(body.acao), at: agora });
         comandos.set(pin, fila);
       }
+      if (body.chat && typeof body.chat === 'string') {
+        const fila = comandos.get(pin) || [];
+        fila.push({ acao: 'postarChat', texto: String(body.chat).slice(0, 500), at: agora });
+        comandos.set(pin, fila);
+      }
       const est = estados.get(pin);
       if (!est) return res.json({ vazio: true });
       return res.json(est.estado);
@@ -52,7 +57,7 @@ export function rotaEspelho() {
     if (fila.length) {
       const c = fila.shift();
       comandos.set(pin, fila);
-      return res.json({ ok: true, acao: c.acao });
+      return res.json({ ok: true, acao: c.acao, texto: c.texto });
     }
     res.json({ ok: true });
   });
