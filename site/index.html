@@ -359,64 +359,76 @@ body {
 
 /* ================= BLOCO 2 - PROBLEMA ================= */
 .bloco-problema {
-  padding: 70px 0;
+  padding: 48px 0;
   position: relative;
 }
 .problema-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
+  display: grid; grid-template-columns: 1fr 1.05fr;
+  gap: 40px; align-items: center;
 }
-.imagem-placeholder {
-  width: 100%; aspect-ratio: 4/5;
-  border-radius: 24px;
-  background:
-    linear-gradient(135deg, rgba(76, 139, 255, 0.15), rgba(0, 229, 255, 0.05));
-  border: 2px dashed rgba(0, 229, 255, 0.3);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: var(--tx-3);
-  text-align: center;
-  padding: 40px;
-  position: relative;
+.video-slot {
+  width: 100%; aspect-ratio: 5/4;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 229, 255, 0.15);
+  background: linear-gradient(135deg, rgba(76, 139, 255, 0.12), rgba(0, 229, 255, 0.04));
+  border: 1px solid var(--borda-2);
 }
-.imagem-placeholder::before {
+.video-slot video {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+.video-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--tx-3); text-align: center; padding: 30px;
+}
+.video-placeholder::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(0, 229, 255, 0.15), transparent 60%);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0, 229, 255, 0.15), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(255, 51, 85, 0.1), transparent 50%);
 }
-.imagem-placeholder .icon {
-  font-size: 48px; margin-bottom: 20px;
-  filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
+.video-placeholder .icon-cam {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--azul), var(--ciano));
+  display: grid; place-items: center; font-size: 36px;
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.5);
+  margin-bottom: 20px;
+  position: relative;
+  animation: pulseRed 2s ease-in-out infinite;
 }
-.imagem-placeholder .label {
-  font-size: 13px; text-transform: uppercase; letter-spacing: 2px;
+.video-placeholder .lbl {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
   color: var(--ciano); font-weight: 700; margin-bottom: 8px;
+  position: relative;
 }
-.imagem-placeholder .desc { font-size: 14px; color: var(--tx-2); max-width: 280px; }
+.video-placeholder .desc { font-size: 13px; color: var(--tx-2); max-width: 300px; line-height: 1.5; position: relative; }
 
 .bloco-titulo {
-  font-size: clamp(30px, 4.5vw, 52px);
+  font-size: clamp(26px, 3.5vw, 42px);
   font-weight: 900;
   line-height: 1.05;
-  letter-spacing: -1.5px;
-  margin-bottom: 32px;
+  letter-spacing: -1.2px;
+  margin-bottom: 24px;
 }
 .problema-txt {
-  font-size: 22px; font-weight: 700;
-  color: var(--tx); line-height: 1.4;
-  margin-bottom: 12px;
+  font-size: 17px; font-weight: 700;
+  color: var(--tx); line-height: 1.3;
+  margin-bottom: 6px;
 }
 .problema-txt.destaque {
-  color: var(--verm); font-size: 32px; font-weight: 900;
-  margin-top: 32px; margin-bottom: 24px;
+  color: var(--verm); font-size: 22px; font-weight: 900;
+  margin-top: 18px; margin-bottom: 14px;
 }
 .problema-conclu {
-  margin-top: 40px;
-  padding: 24px 28px;
+  margin-top: 24px;
+  padding: 16px 20px;
   background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(76, 139, 255, 0.04));
   border-left: 3px solid var(--ciano);
-  border-radius: 12px;
-  font-size: 17px; color: var(--tx); line-height: 1.5;
+  border-radius: 10px;
+  font-size: 14px; color: var(--tx); line-height: 1.5;
 }
 
 /* ================= BLOCO 3 - COMO FUNCIONA ================= */
@@ -888,10 +900,21 @@ footer {
 <section class="bloco-problema">
   <div class="wrap">
     <div class="problema-grid">
-      <div class="imagem-placeholder">
-        <div class="icon">📸</div>
-        <div class="label">Imagem para substituir</div>
-        <div class="desc">Foto de pessoa fazendo LIVE de venda ou aparente cansaço após transmissão longa (câmera, iluminação, celular no tripé).</div>
+      <!--
+        SUBSTITUIR pelo video real de uma mulher fazendo LIVE Shop.
+        Recomendado: video curto (5-15s), sem audio, autoplay/loop.
+        Onde pegar gratis: https://www.pexels.com/videos (busca: "live streaming", "woman product", "online seller")
+        Formato: MP4 720p, ate 2MB. Coloque em servidor/site/ e ajuste o src.
+      -->
+      <div class="video-slot">
+        <video autoplay muted loop playsinline poster="">
+          <source src="" type="video/mp4">
+        </video>
+        <div class="video-placeholder">
+          <div class="icon-cam">🎥</div>
+          <div class="lbl">Vídeo para substituir</div>
+          <div class="desc">Mulher apresentando produtos em LIVE Shop — câmera, arara de roupas ao fundo, produto em mão. Sem áudio, loop curto.</div>
+        </div>
       </div>
       <div>
         <h2 class="bloco-titulo">
@@ -899,8 +922,8 @@ footer {
         </h2>
         <div class="problema-txt">2 horas de LIVE = 2 horas suas.</div>
         <div class="problema-txt">4 horas de LIVE = 4 horas suas.</div>
-        <div class="problema-txt destaque">8 horas de LIVE = praticamente um dia inteiro.</div>
-        <div class="problema-txt" style="color: var(--ciano)">Até agora.</div>
+        <div class="problema-txt destaque">8 horas de LIVE = um dia inteiro.</div>
+        <div class="problema-txt" style="color: var(--ciano); font-size: 15px; margin-top: 8px">Até agora.</div>
         <div class="problema-conclu">
           <strong>Com o Piloto Automático IA</strong>, você deixa de depender exclusivamente das suas horas disponíveis para manter sua operação de LIVE.
         </div>
