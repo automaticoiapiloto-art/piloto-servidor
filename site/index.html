@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0e1a">
+  <title>Piloto Automático IA | Automatize suas Lives</title>
+  <meta name="description" content="Transforme uma gravação em uma operação de LIVE automatizada. Conheça o Piloto Automático IA e descubra uma nova maneira de escalar suas transmissões.">
+  <meta property="og:title" content="Piloto Automático IA | Automatize suas Lives">
+  <meta property="og:description" content="Transforme uma gravação em uma operação de LIVE automatizada.">
+  <meta property="og:image" content="https://pilotoautomaticoia.com.br/logo.png">
+  <meta property="og:url" content="https://pilotoautomaticoia.com.br">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="/logo.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0e1a;
+      --bg-2: #0f1523;
+      --bg-3: #141c2e;
+      --tx: #f0f4ff;
+      --tx-2: #a3b1ce;
+      --tx-3: #6b7794;
+      --azul: #4c8bff;
+      --ciano: #00e5ff;
+      --neon: #00e5ff;
+      --verm: #ff3355;
+      --borda: rgba(76, 139, 255, 0.15);
+      --borda-2: rgba(0, 229, 255, 0.3);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--tx);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(76,139,255,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 40%, rgba(0,229,255,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 90%, rgba(76,139,255,0.1) 0%, transparent 50%);
+    }
+
+    /* ================== nav ================== */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 14, 26, 0.7);
+      border-bottom: 1px solid var(--borda);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .marca { display: flex; align-items: center; gap: 12px; }
+    .marca img {
+      width: 40px; height: 40px; border-radius: 50%;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+    }
+    .marca-nome { font-weight: 700; font-size: 15px; letter-spacing: 0.3px; }
+    .nav-cta {
+      padding: 10px 20px; border-radius: 30px;
+      background: linear-gradient(135deg, var(--azul), var(--ciano));
+      color: white; font-weight: 700; font-size: 13px;
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+      transition: transform 0.15s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); }
+
+    /* ================== containers ================== */
+    section { padding: 80px 24px; position: relative; }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+
+    /* ================== hero ================== */
+    .hero { padding: 60px 24px 100px; text-align: center; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 30px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid var(--borda-2);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--ciano);
+      margin-bottom: 30px;
+    }
+    .badge .live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--verm);
+      box-shadow: 0 0 10px var(--verm);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+    h1.hero-h {
+      font-size: clamp(32px, 5.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      max-width: 900px; margin: 0 auto 24px;
+      letter-spacing: -1px;
+    }
+    h1.hero-h .grad {
+      background: linear-gradient(135deg, var(--ciano), var(--azul));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--tx-2);
+      max-width: 720px; margin: 0 auto 40px;
+    }
+
+    .desafio-box {
+      max-width: 620px; margin: 40px auto;
+      padding: 24px;
+      background: rgba(255, 51, 85, 0.06);
+      border: 1px solid rgba(255, 51, 85, 0.25);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+    .desafio-box h3 {
+      font-size: 15px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--verm); margin-bottom: 8px; font-weight: 700;
+    }
+    .desafio-box p { font-size: 18px; color: var(--tx); font-weight: 600; }
+
+    .cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 20px 40px;
+      background: linear-gradient(135deg, var(--azul), var(--ciano));
+      color: white; text-decoration: none;
+      border-radius: 40px; border: none; cursor: pointer;
+      font-size: 16px; font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 10px 40px rgba(0, 229, 255, 0.4), 0 0 60px rgba(76, 139, 255, 0.3);
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin: 30px 0 20px;
+    }
+    .cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 50px rgba(0, 229, 255, 0.6), 0 0 80px rgba(76, 139, 255, 0.4);
+    }
+    .preco-mini {
+      color: var(--tx-2); font-size: 15px;
+    }
+    .preco-mini strong { color: var(--ciano); font-size: 22px; font-weight: 800; }
+    .fine-print {
+      font-size: 11px; color: var(--tx-3);
+      max-width: 620px; margin: 20px auto 0;
+      padding: 0 20px; line-height: 1.4;
+    }
+
+    /* ================== 3 passos ================== */
+    .passos {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 20px; align-items: center;
+      max-width: 1000px; margin: 60px auto 0;
+    }
+    .passo {
+      background: linear-gradient(135deg, rgba(20, 28, 46, 0.9), rgba(15, 21, 35, 0.9));
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+    .passo-num {
+      display: inline-block;
+      width: 48px; height: 48px; line-height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--azul), var(--ciano));
+      color: white; font-weight: 800; font-size: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+    }
+    .passo h4 { font-size: 18px; margin-bottom: 6px; letter-spacing: 0.5px; }
+    .passo p { color: var(--tx-2); font-size: 14px; }
+    .seta { color: var(--ciano); font-size: 32px; opacity: 0.7; }
+    @media (max-width: 780px) {
+      .passos { grid-template-columns: 1fr; }
+      .seta { transform: rotate(90deg); margin: -10px auto; }
+    }
+
+    /* ================== h2 / titulos de sec ================== */
+    h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      text-align: center;
+      max-width: 800px; margin: 0 auto 20px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+    h2 .grad {
+      background: linear-gradient(135deg, var(--ciano), var(--azul));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sub-sec {
+      text-align: center; color: var(--tx-2);
+      max-width: 720px; margin: 0 auto 60px;
+      font-size: 16px;
+    }
+
+    /* ================== cards beneficios ================== */
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    @media (max-width: 780px) { .grid-3 { grid-template-columns: 1fr; } }
+    .card {
+      background: linear-gradient(135deg, rgba(20, 28, 46, 0.9), rgba(15, 21, 35, 0.6));
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .card:hover {
+      border-color: var(--borda-2);
+      transform: translateY(-4px);
+    }
+    .card .icone {
+      font-size: 32px; margin-bottom: 16px;
+      display: inline-block;
+      width: 60px; height: 60px; line-height: 60px; text-align: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(76, 139, 255, 0.15), rgba(0, 229, 255, 0.08));
+      border: 1px solid var(--borda);
+    }
+    .card h3 { font-size: 18px; margin-bottom: 10px; letter-spacing: 0.5px; }
+    .card p { color: var(--tx-2); font-size: 14px; }
+
+    /* ================== rotina fluxograma ================== */
+    .rotina-frase {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800; text-align: center;
+      max-width: 800px; margin: 0 auto 60px;
+      line-height: 1.3;
+    }
+    .rotina-frase span { display: block; }
+    .rotina-frase .l1 { color: var(--tx); }
+    .rotina-frase .l2 { color: var(--ciano); }
+    .rotina-frase .l3 { color: var(--tx-2); }
+
+    .fluxo {
+      max-width: 500px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .fluxo-item {
+      background: rgba(20, 28, 46, 0.7);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px;
+      backdrop-filter: blur(10px);
+    }
+    .fluxo-item .ic { font-size: 24px; }
+    .fluxo-item .tx { color: var(--tx); font-weight: 500; }
+    .fluxo-seta {
+      text-align: center; color: var(--ciano);
+      font-size: 20px; opacity: 0.6;
+    }
+    .rotina-conclu {
+      text-align: center; margin-top: 60px;
+      font-size: clamp(18px, 2.5vw, 22px);
+      color: var(--tx);
+      max-width: 700px; margin-left: auto; margin-right: auto;
+      font-weight: 600;
+    }
+
+    /* ================== desafio 7 dias ================== */
+    .desafio-header {
+      text-align: center; margin-bottom: 60px;
+    }
+    .desafio-header .badge-dias {
+      display: inline-block;
+      padding: 8px 20px;
+      background: rgba(255, 51, 85, 0.1);
+      border: 1px solid rgba(255, 51, 85, 0.3);
+      border-radius: 30px;
+      color: var(--verm); font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .dias {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+      max-width: 1000px; margin: 0 auto 40px;
+    }
+    @media (max-width: 780px) { .dias { grid-template-columns: 1fr 1fr; } }
+    .dia {
+      background: linear-gradient(135deg, rgba(20, 28, 46, 0.8), rgba(15, 21, 35, 0.6));
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    .dia-num {
+      color: var(--ciano); font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .dia-txt { color: var(--tx); font-size: 14px; font-weight: 500; }
+
+    .meta-desafio {
+      text-align: center;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(76, 139, 255, 0.1), rgba(0, 229, 255, 0.05));
+      border: 1px solid var(--borda-2);
+      border-radius: 20px;
+      max-width: 620px; margin: 0 auto;
+    }
+    .meta-desafio .l1 {
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--tx-2); margin-bottom: 10px; font-weight: 600;
+    }
+    .meta-desafio .l2 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--ciano), var(--azul));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ================== para quem ================== */
+    .grid-2 {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      max-width: 1000px; margin: 0 auto;
+    }
+    @media (max-width: 780px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+    .pq {
+      background: rgba(20, 28, 46, 0.6);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .pq:hover { border-color: var(--borda-2); background: rgba(20, 28, 46, 0.9); }
+    .pq .ic {
+      font-size: 24px; margin-bottom: 10px;
+      color: var(--ciano);
+    }
+    .pq .txt { color: var(--tx); font-size: 14px; font-weight: 600; }
+
+    /* ================== oferta ================== */
+    .oferta-wrap { text-align: center; }
+    .oferta-card {
+      max-width: 500px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(20, 28, 46, 0.95), rgba(15, 21, 35, 0.85));
+      border: 2px solid var(--borda-2);
+      border-radius: 24px;
+      padding: 48px 32px;
+      position: relative;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 80px rgba(0, 229, 255, 0.15), 0 0 100px rgba(76, 139, 255, 0.1);
+    }
+    .oferta-card::before {
+      content: ''; position: absolute; inset: -2px;
+      background: linear-gradient(135deg, var(--ciano), transparent, var(--azul));
+      border-radius: 24px; z-index: -1; opacity: 0.5;
+    }
+    .oferta-logo {
+      width: 80px; height: 80px; border-radius: 50%;
+      margin: 0 auto 20px; display: block;
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.5);
+    }
+    .oferta-card h3 {
+      font-size: 24px; margin-bottom: 8px; letter-spacing: -0.3px;
+    }
+    .oferta-card .slogan {
+      color: var(--tx-2); font-size: 15px; margin-bottom: 32px;
+    }
+    .preco-grande {
+      font-size: clamp(42px, 7vw, 64px);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--ciano), var(--azul));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 32px;
+      letter-spacing: -2px;
+    }
+    .oferta-conclu {
+      color: var(--tx-2); font-size: 14px;
+      margin-top: 24px; line-height: 1.5;
+    }
+
+    /* ================== faq ================== */
+    .faq-list { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      background: rgba(20, 28, 46, 0.5);
+      border: 1px solid var(--borda);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .faq-item[open] { border-color: var(--borda-2); }
+    .faq-item summary {
+      padding: 20px 24px;
+      cursor: pointer;
+      list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+      font-weight: 600; color: var(--tx);
+      font-size: 15px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+'; color: var(--ciano); font-size: 24px; font-weight: 300;
+      transition: transform 0.2s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item .content {
+      padding: 0 24px 20px;
+      color: var(--tx-2); font-size: 14px; line-height: 1.6;
+    }
+
+    /* ================== aviso ================== */
+    .aviso {
+      background: linear-gradient(135deg, rgba(20, 28, 46, 0.8), rgba(15, 21, 35, 0.6));
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 900px; margin: 0 auto;
+    }
+    .aviso h3 {
+      color: var(--ciano); font-size: 14px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 16px; text-align: center;
+    }
+    .aviso p {
+      color: var(--tx-2); font-size: 14px; margin-bottom: 12px; line-height: 1.6;
+    }
+    .aviso p:last-child { margin-bottom: 0; }
+
+    /* ================== footer ================== */
+    footer {
+      padding: 60px 24px 40px;
+      border-top: 1px solid var(--borda);
+      background: rgba(10, 14, 26, 0.6);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px;
+    }
+    @media (max-width: 780px) { .footer-inner { grid-template-columns: 1fr; } }
+    .footer-marca {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .footer-marca img { width: 40px; height: 40px; border-radius: 50%; }
+    .footer-marca strong { font-size: 16px; }
+    .footer-txt { color: var(--tx-3); font-size: 13px; line-height: 1.6; max-width: 400px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      color: var(--tx-2); font-size: 13px; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--ciano); }
+    .footer-copy {
+      max-width: 1200px; margin: 40px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--borda);
+      text-align: center;
+      color: var(--tx-3); font-size: 12px;
+    }
+
+    /* ================== cta flutuante mobile ================== */
+    .cta-float {
+      display: none;
+      position: fixed; bottom: 20px; left: 20px; right: 20px;
+      padding: 18px 24px;
+      background: linear-gradient(135deg, var(--azul), var(--ciano));
+      color: white; text-decoration: none;
+      border-radius: 40px;
+      font-weight: 700; font-size: 15px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 229, 255, 0.5);
+      z-index: 99;
+    }
+    @media (max-width: 780px) {
+      .cta-float.show { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================= NAV ======================= -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="marca">
+        <img src="/logo.png" alt="Piloto Automático IA">
+        <div class="marca-nome">Piloto Automático IA</div>
+      </div>
+      <a href="#oferta" class="nav-cta">Começar agora</a>
+    </div>
+  </nav>
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="badge">
+        <span class="live-dot"></span>
+        LIVE + IA + AUTOMAÇÃO
+      </div>
+
+      <h1 class="hero-h">
+        Transforme uma única gravação em <span class="grad">horas de LIVE</span> — no piloto automático.
+      </h1>
+
+      <p class="hero-sub">
+        Grave sua LIVE, configure o Piloto Automático IA e deixe a tecnologia trabalhar para você enquanto você ganha escala no LIVE Commerce.
+      </p>
+
+      <div class="desafio-box">
+        <h3>Aceita o desafio?</h3>
+        <p>Busque seus primeiros R$ 1.000 em 7 dias com LIVE Shop usando automação + IA.</p>
+      </div>
+
+      <a href="#oferta" class="cta">Quero colocar minhas lives no piloto automático →</a>
+
+      <div class="preco-mini">
+        Acesso por apenas <strong>R$ 97,90</strong>
+      </div>
+
+      <p class="fine-print">
+        *R$ 1.000 é uma meta proposta para o desafio e não representa promessa ou garantia de ganhos. Resultados variam de acordo com produto, oferta, audiência, plataforma, execução e outros fatores.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================= 3 PASSOS ======================= -->
+  <section style="padding-top: 40px;">
+    <div class="wrap">
+      <div class="passos">
+        <div class="passo">
+          <div class="passo-num">1</div>
+          <h4>GRAVE</h4>
+          <p>Faça sua LIVE normalmente.</p>
+        </div>
+        <div class="seta">→</div>
+        <div class="passo">
+          <div class="passo-num">2</div>
+          <h4>CONFIGURE</h4>
+          <p>Prepare sua transmissão no Piloto Automático IA.</p>
+        </div>
+        <div class="seta">→</div>
+        <div class="passo">
+          <div class="passo-num">3</div>
+          <h4>AUTOMATIZE</h4>
+          <p>Deixe sua LIVE rodando de forma automatizada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= BENEFICIOS ======================= -->
+  <section>
+    <div class="wrap">
+      <h2>E se você pudesse <span class="grad">multiplicar suas horas de LIVE</span> sem precisar ficar na frente da câmera o tempo inteiro?</h2>
+      <p class="sub-sec">
+        Quem trabalha com LIVE Commerce sabe que frequência e tempo de transmissão exigem energia, disponibilidade e consistência. O Piloto Automático IA foi criado para transformar uma LIVE previamente gravada em uma operação muito mais escalável.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icone">⚡</div>
+          <h3>Mais escala</h3>
+          <p>Aproveite melhor uma gravação já produzida.</p>
+        </div>
+        <div class="card">
+          <div class="icone">⏰</div>
+          <h3>Mais tempo</h3>
+          <p>Reduza a necessidade de permanecer horas repetindo a mesma apresentação.</p>
+        </div>
+        <div class="card">
+          <div class="icone">🤖</div>
+          <h3>Automação + IA</h3>
+          <p>Use tecnologia para simplificar sua operação de LIVE.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= ROTINA ======================= -->
+  <section style="background: linear-gradient(180deg, transparent, rgba(76, 139, 255, 0.03));">
+    <div class="wrap">
+      <div class="rotina-frase">
+        <span class="l1">Você grava.</span>
+        <span class="l2">O Piloto assume.</span>
+        <span class="l3">Sua LIVE continua.</span>
+      </div>
+      <div class="fluxo">
+        <div class="fluxo-item"><span class="ic">🎥</span><span class="tx">Você grava sua apresentação</span></div>
+        <div class="fluxo-seta">↓</div>
+        <div class="fluxo-item"><span class="ic">⚙️</span><span class="tx">Configura sua operação</span></div>
+        <div class="fluxo-seta">↓</div>
+        <div class="fluxo-item"><span class="ic">🤖</span><span class="tx">Piloto Automático IA entra em ação</span></div>
+        <div class="fluxo-seta">↓</div>
+        <div class="fluxo-item"><span class="ic">🔴</span><span class="tx">Sua LIVE é transmitida</span></div>
+        <div class="fluxo-seta">↓</div>
+        <div class="fluxo-item"><span class="ic">🛍️</span><span class="tx">Você pode utilizar sua estratégia de LIVE Commerce</span></div>
+      </div>
+      <p class="rotina-conclu">Você deixa de trocar apenas suas horas por horas de transmissão.</p>
+    </div>
+  </section>
+
+  <!-- ======================= DESAFIO 7 DIAS ======================= -->
+  <section>
+    <div class="wrap">
+      <div class="desafio-header">
+        <div class="badge-dias">🔴 7 dias</div>
+        <h2>Desafio Piloto Automático</h2>
+        <p class="sub-sec">Quanto você conseguiria gerar se pudesse aumentar sua presença em LIVE Shop sem precisar apresentar tudo novamente?</p>
+      </div>
+      <div class="dias">
+        <div class="dia">
+          <div class="dia-num">Dia 1</div>
+          <div class="dia-txt">Prepare produto, oferta e roteiro.</div>
+        </div>
+        <div class="dia">
+          <div class="dia-num">Dia 2</div>
+          <div class="dia-txt">Grave sua LIVE.</div>
+        </div>
+        <div class="dia">
+          <div class="dia-num">Dia 3</div>
+          <div class="dia-txt">Configure sua transmissão.</div>
+        </div>
+        <div class="dia">
+          <div class="dia-num">Dias 4–7</div>
+          <div class="dia-txt">Teste horários, ofertas, produtos e aumente sua presença em LIVE.</div>
+        </div>
+      </div>
+      <div class="meta-desafio">
+        <div class="l1">Meta do desafio</div>
+        <div class="l2">R$ 1.000 em vendas*</div>
+      </div>
+      <p class="fine-print" style="margin-top:20px">
+        *Meta educacional/comercial do desafio. Não existe garantia de faturamento ou lucro. O resultado depende de diversos fatores individuais e externos.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================= PARA QUEM ======================= -->
+  <section>
+    <div class="wrap">
+      <h2>Feito para quem quer levar <span class="grad">LIVE a sério</span>.</h2>
+      <p class="sub-sec">Se você faz LIVE Commerce ou quer começar, o Piloto foi pensado pra você.</p>
+      <div class="grid-2">
+        <div class="pq"><div class="ic">📱</div><div class="txt">Afiliados de LIVE Shop</div></div>
+        <div class="pq"><div class="ic">🎬</div><div class="txt">Criadores de conteúdo</div></div>
+        <div class="pq"><div class="ic">🛒</div><div class="txt">Vendedores online</div></div>
+        <div class="pq"><div class="ic">🏷️</div><div class="txt">Marcas e lojas</div></div>
+        <div class="pq"><div class="ic">📊</div><div class="txt">Operadores de LIVE Commerce</div></div>
+        <div class="pq"><div class="ic">💡</div><div class="txt">Quem começa uma nova renda online</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= OFERTA ======================= -->
+  <section id="oferta" style="background: radial-gradient(circle at center, rgba(76, 139, 255, 0.08), transparent 70%);">
+    <div class="oferta-wrap">
+      <div class="oferta-card">
+        <img src="/logo.png" alt="Piloto Automático IA" class="oferta-logo">
+        <h3>Piloto Automático IA</h3>
+        <p class="slogan">Coloque suas LIVEs no piloto automático.</p>
+        <div class="preco-grande">R$ 97,90</div>
+        <a href="#" id="btn-comprar" class="cta" style="margin: 0;">Quero começar agora →</a>
+        <p class="oferta-conclu">
+          Comece hoje. Grave sua primeira LIVE. Configure sua operação. E coloque o Piloto Automático IA para trabalhar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section>
+    <div class="wrap">
+      <h2>Perguntas <span class="grad">frequentes</span></h2>
+      <p class="sub-sec">O básico que você precisa saber antes de começar.</p>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>O que é o Piloto Automático IA?</summary>
+          <div class="content">É uma ferramenta desenvolvida para automatizar operações de LIVE a partir de conteúdo previamente gravado.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Preciso saber programação?</summary>
+          <div class="content">Não. A ferramenta é feita para ser configurada em poucos passos, sem conhecimento técnico avançado.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Preciso gravar uma LIVE?</summary>
+          <div class="content">Sim. O conceito do produto parte de uma LIVE/conteúdo previamente preparado por você.</div>
+        </details>
+        <details class="faq-item">
+          <summary>O Piloto Automático IA garante que vou vender?</summary>
+          <div class="content">Não. A ferramenta auxilia na automação da operação. Vendas dependem de produto, preço, oferta, conteúdo, audiência, plataforma, estratégia e diversos outros fatores.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Vou ganhar R$ 1.000 em 7 dias?</summary>
+          <div class="content">Não existe garantia. R$ 1.000 é a meta proposta no Desafio Piloto Automático. Alguns usuários podem atingir resultados superiores, inferiores ou não gerar vendas.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Posso utilizar em qualquer plataforma?</summary>
+          <div class="content">Utilize somente plataformas e ambientes efetivamente suportados pela versão atual do software. A lista de compatibilidades é atualizada no painel de configurações.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= AVISO ======================= -->
+  <section>
+    <div class="wrap">
+      <div class="aviso">
+        <h3>Transparência é importante</h3>
+        <p>O Piloto Automático IA é uma ferramenta tecnológica de automação. Não vendemos renda garantida, oportunidade de investimento ou promessa de enriquecimento.</p>
+        <p>Exemplos, metas, projeções ou desafios apresentados nesta página têm caráter ilustrativo e educacional.</p>
+        <p>Resultados dependem da execução individual, produto, oferta, audiência, estratégia, condições de mercado, regras e funcionamento das plataformas utilizadas, entre outros fatores.</p>
+        <p>O usuário é responsável por verificar e respeitar os termos, políticas e regras das plataformas em que utilizar a ferramenta.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= FOOTER ======================= -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-marca">
+          <img src="/logo.png" alt="Piloto Automático IA">
+          <strong>Piloto Automático IA</strong>
+        </div>
+        <p class="footer-txt">Ferramenta de automação de LIVE para criadores, afiliados e operadores de LIVE Commerce. Sua LIVE no automático.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/termos">Termos de Uso</a>
+        <a href="/privacidade">Política de Privacidade</a>
+        <a href="/cookies">Política de Cookies</a>
+        <a href="/responsabilidade">Termo de Responsabilidade</a>
+        <a href="/reembolso">Política de Reembolso</a>
+        <a href="mailto:contato@pilotoautomaticoia.com.br">Contato</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      Copyright © 2026 Piloto Automático IA. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <!-- CTA flutuante mobile -->
+  <a href="#oferta" id="cta-float" class="cta-float">Começar por R$ 97,90 →</a>
+
+  <script>
+    // CTA flutuante aparece depois da 1ª dobra
+    const ctaFloat = document.getElementById('cta-float');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight * 0.6) ctaFloat.classList.add('show');
+      else ctaFloat.classList.remove('show');
+    });
+
+    // botão de comprar (placeholder até integrar gateway)
+    document.getElementById('btn-comprar').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Integração com o gateway de pagamento em configuração.\n\nEnquanto isso, entre em contato: contato@pilotoautomaticoia.com.br');
+    });
+  </script>
+</body>
+</html>
