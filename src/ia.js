@@ -21,7 +21,14 @@ export function rotaIA(cfg) {
     console.warn('⚠️  ANTHROPIC_API_KEY nao setada — /api/ia/responder vai devolver 503');
   }
   const cliente = process.env.ANTHROPIC_API_KEY
-    ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+    ? new Anthropic({
+        apiKey: process.env.ANTHROPIC_API_KEY,
+        // se a chave for de organizacao (nao de workspace), precisa do
+        // header anthropic-workspace-id. Chave de workspace nao precisa.
+        defaultHeaders: process.env.ANTHROPIC_WORKSPACE_ID
+          ? { 'anthropic-workspace-id': process.env.ANTHROPIC_WORKSPACE_ID }
+          : {},
+      })
     : null;
 
   // rate limit por chave
