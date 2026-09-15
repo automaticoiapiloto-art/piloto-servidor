@@ -14,6 +14,7 @@ import cors from 'cors';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rotaLicenca } from './licenca.js';
+import { rotaContas } from './contas.js';
 import { rotaEspelho } from './espelho.js';
 import { rotaAdmin } from './admin.js';
 import { rotaIA } from './ia.js';
@@ -64,6 +65,7 @@ app.get('/api/publickey', async (_req, res) => {
   res.json({ pubRawB64: par.pubRawB64 });
 });
 app.use('/api', rotaLicenca(cfg));
+app.use('/api/contas', rotaContas(cfg));
 app.use('/api/ia', rotaIA(cfg));
 app.use('/espelho', rotaEspelho());
 app.use('/admin', rotaAdmin(cfg));
