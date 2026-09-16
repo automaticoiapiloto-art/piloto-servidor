@@ -31,5 +31,12 @@ services:
         value: "3"
       - key: ADMIN_TOKEN
         generateValue: true
+      # IA_PROVIDER: 'gemini' (gratis) ou 'anthropic' (pago). Default: gemini.
+      - key: IA_PROVIDER
+        value: "gemini"
+      # Gemini (Google AI Studio) — chave gratuita em https://aistudio.google.com/apikey
+      - key: GEMINI_API_KEY
+        sync: false
+      # Anthropic (fallback pago, opcional)
       - key: ANTHROPIC_API_KEY
         sync: false
